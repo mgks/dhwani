@@ -77,6 +77,30 @@ body {
     font-style: italic;
 }
 
+.footer {
+    text-align: center;
+    padding: .75em 1em;
+    position: fixed;
+    bottom: 1em;
+    width: fit-content;
+    border-radius: 5px;
+    z-index: 100;
+    font-size: 0.9em;
+    font-weight: 700;
+    font-family: monospace;
+    letter-spacing: .25px;
+    background-color: #fff;
+    color:#ccc;
+}
+.footer svg{
+  float: left;
+  margin-right: .75em;
+}
+.footer a {
+    text-decoration: none;
+    color: #2a2a2a;
+}
+
 @media (max-width: 600px) {
     #swarDial {
         height: 50px;
