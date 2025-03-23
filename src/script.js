@@ -9,9 +9,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let dataArray;
     let animationFrameId;
 
-    // Smoothing parameters - Reduced, as we rely more on range and stickiness
-    const frequencySmoothing = 0.4; // Less smoothing
-    const dialPositionSmoothing = 0.2; // Less dial smoothing
+    // Smoothing parameters
+    const frequencySmoothing = 0.4;
+    const dialPositionSmoothing = 0.2;
 
     let lastFrequency = 0;
     let lastDialPosition = 0;
@@ -21,10 +21,10 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentSwarIndex = -1;
     let currentOctave = null;
     let currentSwarStartTime = 0;
-    const swarHoldTime = 100; // Shorter hold time (more responsive)
-    const confidenceThreshold = 40; //  Cents -  for changing swars
+    const swarHoldTime = 100;
+    const confidenceThreshold = 40;
 
-       // --- Hindustani Swar Frequencies (Just Intonation) ---
+    // --- Hindustani Swar Frequencies (Just Intonation) ---
     const baseFrequencies = {
         "Sa": 240,
         "re": 256,
@@ -78,8 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return 1200 * Math.log2(f1 / f2);
     }
 
-    // --- Get Closest Swar (Allows Direct Jumps) ---
-    function getClosestSwar(frequency, currentSwar, currentOctave) {
+     function getClosestSwar(frequency, currentSwar, currentOctave) {
         let closestSwar = null;
         let octave = null;
         let centsDiff = 0;
@@ -126,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
             isInCurrentRange: false,
         };
     }
-    // Autocorrelation function (same)
+
     function autoCorrelate(buf, sampleRate) {
         let size = buf.length;
         let rms = 0;
@@ -136,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
             rms += val * val;
         }
         rms = Math.sqrt(rms / size);
-        if (rms < 0.01) { // Not enough signal
+        if (rms < 0.01) {
             return -1;
         }
 
@@ -168,12 +167,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (best_offset === -1) {
-            return -1; // No good correlation found
+            return -1;
         }
 
         const better_offset = best_offset + (buf[best_offset + 1] - buf[best_offset - 1]) / (2 * (2 * buf[best_offset] - buf[best_offset + 1] - buf[best_offset - 1]));
         return sampleRate / better_offset;
     }
+
     function createSwarDial() {
         swarContainer.innerHTML = '';
         for (const swar of swarOrder) {
@@ -224,13 +224,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (centsDiff < flatThreshold) {
                     indicator.classList.add('flat');
-                    indicator.innerHTML = '&flat;';
+                    indicator.innerHTML = '&flat;'; // Flat
                 } else if (centsDiff > sharpThreshold) {
                     indicator.classList.add('sharp');
-                    indicator.innerHTML = '&sharp;';
+                    indicator.innerHTML = '&sharp;'; // Sharp
                 } else {
                     indicator.classList.add('natural');
-                    indicator.innerHTML = '&natural;';
+                    indicator.innerHTML = '&natural;'; // Natural
                 }
             }
         }
@@ -251,7 +251,6 @@ document.addEventListener('DOMContentLoaded', () => {
         detailedSwarDisplay.textContent = `${octaveName} Octave, Frequency: ${frequency.toFixed(2)} Hz, Cents Diff: ${centsDiff.toFixed(0)}`;
     }, 100);
 
-    // --- updatePitch (Prioritize Stickiness and Allow Jumps) ---
     function updatePitch() {
         analyser.getFloatTimeDomainData(dataArray);
         let frequency = autoCorrelate(dataArray, audioContext.sampleRate);
@@ -263,13 +262,12 @@ document.addEventListener('DOMContentLoaded', () => {
             let { swar, octave, centsDiff, isInCurrentRange } = getClosestSwar(frequency, currentSwar, currentOctave);
             const now = Date.now();
 
-            // --- Update Swar Logic (Simplified and More Robust) ---
             if (
-                swar !== null && // A swar is detected within range
-                (currentSwar === null || // No current swar OR
-                 (!isInCurrentRange && //  Not in current range AND
-                  Math.abs(centsDiff) >= confidenceThreshold) || //  Confident change
-                 now - currentSwarStartTime > swarHoldTime) // Hold time expired
+                swar !== null &&
+                (currentSwar === null ||
+                 (!isInCurrentRange &&
+                  Math.abs(centsDiff) >= confidenceThreshold) ||
+                 now - currentSwarStartTime > swarHoldTime)
             ) {
                 currentSwar = swar;
                 currentSwarIndex = swarOrder.indexOf(swar);
@@ -282,12 +280,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 updateDetailedDisplay(octave, frequency, centsDiff);
             }
         } else {
-            // Low signal: Keep displaying last swar if available
             if (currentSwar) {
-                updateSwarDial(currentSwar, 0); // Keep dial position
+                updateSwarDial(currentSwar, 0);
                 detailedSwarDisplay.textContent = "Low Signal";
             } else {
-                detailedSwarDisplay.textContent = "--"; // No previous swar
+                detailedSwarDisplay.textContent = "--";
             }
         }
 

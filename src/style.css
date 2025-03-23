@@ -70,3 +70,57 @@ body {
     margin-top: 1em;
     font-weight: bold;
 }
+
+#humming-note {
+    margin-top: 20px;
+    color: #888;
+    font-style: italic;
+}
+
+@media (max-width: 600px) {
+    #swarDial {
+        height: 50px;
+    }
+
+    .swarItem {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5em;
+    }
+
+    .swarIndicator {
+        font-size: 0.5em;
+    }
+
+    #detailedSwarDisplay {
+        font-size: 1em;
+    }
+
+    #humming-note {
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 400px) {
+   #swarDial {
+        height: 40px;
+    }
+
+    .swarItem {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2em;
+    }
+
+    .swarIndicator {
+        font-size: 0.4em;
+    }
+
+    #detailedSwarDisplay {
+        font-size: 0.9em;
+    }
+
+    #humming-note {
+        font-size: 0.8em;
+    }
+}
