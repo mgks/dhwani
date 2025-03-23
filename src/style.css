@@ -5,17 +5,15 @@ body {
     align-items: center;
     justify-content: center;
     height: 100vh;
-    margin: 0;
-
+    margin: 0 10%;
 }
 
 #swarDial {
-    width: 80%;
+    width: 90%;
     max-width: 800px;
     height: 7em;
     overflow: hidden;
     position: relative;
-
 }
 
 #swarContainer {
@@ -35,7 +33,6 @@ body {
     font-size: 2.5em;
     font-weight: bold;
     transition: opacity 0.3s ease-out;
-
 }
 
 .swarItem.active {
@@ -45,7 +42,6 @@ body {
 .swarIndicator {
     font-size: .75em;
     margin-top: 2px;
-
 }
 
 .swarIndicator.flat {
@@ -92,10 +88,12 @@ body {
     background-color: #fff;
     color:#ccc;
 }
+
 .footer svg{
   float: left;
   margin-right: .75em;
 }
+
 .footer a {
     text-decoration: none;
     color: #2a2a2a;
@@ -105,7 +103,6 @@ body {
     .swarItem {
         font-size: 2em;
     }
-
     #humming-note {
         font-size: 0.75em;
     }
