@@ -1,5 +1,3 @@
-// src/script.js (Correct Frequency and Cents Display - No Cheating!)
-
 import { Dhwani } from '../dhwani.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -14,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let animationFrameId;
 
     // UI Update Interval
-    const displayUpdateInterval = 50; // Update every 50ms
+    const displayUpdateInterval = 50;
     let lastDisplayUpdate = 0;
 
     // Warm-up Period
@@ -32,8 +30,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const swarHoldTime = 100;
     let lastSwarChangeTime = Date.now();
 
-    // Hindustani Swar Frequencies (Just Intonation)
-    const baseFrequencies = { "Sa": 240, "re": 256, "Re": 270, "ga": 288, "Ga": 300, "Ma": 320, "ma": 360, "Pa": 360, "dha": 384, "Dha": 400, "ni": 450, "Ni": 480 };
+    const baseFrequencies = {
+        "Sa": 240,
+        "re": 256,
+        "Re": 270,
+        "ga": 288,
+        "Ga": 300,
+        "Ma": 320,
+        "Ma#": 337.5, // Tivra Ma
+        "Pa": 360,
+        "dha": 384,
+        "Dha": 400,
+        "ni": 450,
+        "Ni": 480
+    };
     const swarFrequencies = {};
     const octaves = [-1, 0, 1, 2];
     const octaveNames = { [-1]: "Mandra", [0]: "Madhya", [1]: "Taar", [2]: "Ati Taar" };
@@ -57,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    const swarOrder = ["Sa", "re", "Re", "ga", "Ga", "Ma", "ma", "Pa", "dha", "Dha", "ni", "Ni"];
+    const swarOrder = ["Sa", "re", "Re", "ga", "Ga", "Ma", "Ma#", "Pa", "dha", "Dha", "ni", "Ni"];
     const flatThreshold = -20;
     const sharpThreshold = 20;
 
@@ -93,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const swarItem = document.createElement('div');
             swarItem.classList.add('swarItem');
             const swarName = document.createElement('div');
-            swarName.textContent = swar;
+            swarName.textContent = swar; // Use swar directly
             swarItem.appendChild(swarName);
             const swarIndicator = document.createElement('div');
             swarIndicator.classList.add('swarIndicator');
@@ -101,8 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
             swarContainer.appendChild(swarItem);
         }
     }
-
-        function updateSwarDial(swar, centsDiff) {
+     function updateSwarDial(swar, centsDiff) {
         const index = swarOrder.indexOf(swar);
         if (index === -1) return;
 
@@ -142,6 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+
     function updateDetailedDisplay(octave, frequency, centsDiff) {
       if (octave === null || currentSwar === null) {
         detailedSwarDisplay.textContent = "--";
@@ -153,9 +163,9 @@ document.addEventListener('DOMContentLoaded', () => {
       let displayedCentsDiff;
 
       if (frequency !== null) {
-        displayedFrequency = frequency.toFixed(2); // Show actual detected frequency, formatted
-        const idealFrequency = swarFrequencies[octave][currentSwar]; // Correct ideal freq
-        displayedCentsDiff = centsDifference(frequency, idealFrequency).toFixed(0); // Cents, formatted
+        displayedFrequency = frequency.toFixed(2);
+        const idealFrequency = swarFrequencies[octave][currentSwar];
+        displayedCentsDiff = centsDifference(frequency, idealFrequency).toFixed(0);
       } else {
         displayedFrequency = "--";
         displayedCentsDiff = "--";
