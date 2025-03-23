@@ -1,0 +1,72 @@
+body {
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+
+}
+
+#swarDial {
+    width: 80%;
+    max-width: 800px;
+    height: 7em;
+    overflow: hidden;
+    position: relative;
+
+}
+
+#swarContainer {
+    display: flex;
+    position: absolute;
+    left: 0;
+    transition: left 0.2s ease-out;
+}
+
+.swarItem {
+    width: 2.5em;
+    height: 2.5em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5em;
+    font-weight: bold;
+    transition: opacity 0.3s ease-out;
+
+}
+
+.swarItem.active {
+    color: #007bff;
+}
+
+.swarIndicator {
+    font-size: .75em;
+    margin-top: 2px;
+
+}
+
+.swarIndicator.flat {
+    color: #a01aa0;
+}
+
+.swarIndicator.natural {
+    color: #008000;
+}
+
+.swarIndicator.sharp {
+    color: #ef3737;
+}
+
+.swarIndicator.active {
+     font-weight: bold;
+}
+
+#detailedSwarDisplay {
+    font-size: 1em;
+    color: #777777;
+    margin-top: 1em;
+    font-weight: bold;
+}
