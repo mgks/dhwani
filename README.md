@@ -1,122 +1,140 @@
 # Dhwani
 
-Dhwani is a vocal tuner designed specifically for Hindustani classical music. It helps singers practice and improve their intonation by providing real-time feedback on the swar (note) being sung. Dhwani is available as both a web application and a reusable JavaScript library.
+<p align="left">
+  <a href="https://www.npmjs.com/package/dhwani"><img src="https://img.shields.io/npm/v/dhwani.svg?style=flat-square&color=007acc" alt="npm version"></a>
+  <a href="https://www.npmjs.com/package/dhwani"><img src="https://img.shields.io/npm/dt/dhwani.svg?style=flat-square&color=success" alt="npm downloads"></a>
+  <a href="https://github.com/mgks/dhwani/blob/main/LICENSE"><img src="https://img.shields.io/github/license/mgks/dhwani.svg?style=flat-square&color=blue" alt="license"></a>
+  <a href="https://github.com/mgks/dhwani/stargazers"><img src="https://img.shields.io/github/stars/mgks/dhwani?style=flat-square&logo=github" alt="stars"></a>
+</p>
 
-## Features (Web App & Library)
+**Dhwani** is a precision vocal tuner engine designed specifically for **Hindustani Classical Music**. Unlike standard tuners that use Equal Temperament (12-TET), Dhwani uses **Just Intonation** relative to a base Sa, making it accurate for Indian Classical frequencies.
 
-*   **Real-time Pitch Detection:**  Analyzes audio input and identifies the closest Hindustani swar.
-*   **Just Intonation:** Uses a just intonation tuning system based on common Hindustani classical frequencies (starting with Sa at 240 Hz).
-*   **Multiple Octaves:**  Handles multiple octaves, including Mandra, Madhya, Taar, and Ati-Taar saptaks.
-*   **Noise Reduction:** Includes basic noise reduction.
+It functions as both a standalone **Web Application** and a lightweight, dependency-free **Node.js Library**.
 
-## Web App Features
+## 🎵 For Musicians: The Web App
 
-*   **Swar Dial Display:**  A visually intuitive dial shows the current swar, with neighboring swaras fading out to the sides.
-*   **Flat/Natural/Sharp Indicators:**  Indicates whether the sung note is flat (komal), natural (shuddh), or sharp (tivra) relative to the ideal swar frequency.
-*   **Detailed Information:** Displays the octave, detected frequency (in Hz), and the difference in cents from the ideal swar frequency.
-*   **Responsive Design:** Works well on desktops, tablets, and mobile devices.
-*   **Lightweight and Fast:** Built with just HTML, CSS, and JavaScript.
+Dhwani is available as a free, responsive web application. It features a noise-resistant detection algorithm, a "visual tape" interface, and dark mode support.
 
-## How to Use (Web App)
+👉 **Launch Tuner: [dhwani.mgks.dev](https://dhwani.mgks.dev)**
 
-1.  Open [dhwani.mgks.dev](https://dhwani.mgks.dev) in a modern web browser (Chrome, Firefox, Edge, or Safari recommended).
-2.  Grant the website permission to access your microphone.
-3.  Begin singing a Hindustani swar.  The tuner will display the detected swar and provide visual feedback.
-4.  Humming is suggested for better accuracy.
+### Features
+*   **Real-time Swar Detection:** Identifies the closest Hindustani note (Sa, re, Re, ga, Ga...).
+*   **Just Intonation:** Tuned to the harmonic series (e.g., Pa is exactly 1.5x Sa), not the compromised piano tuning.
+*   **Visual Feedback:** A sliding dial shows exactly how many "cents" (microtones) you are sharp or flat.
+*   **Offline Capable:** Install it as a PWA (Progressive Web App) on your phone or desktop to use without internet.
 
-## Using the Dhwani Library
+## 👨‍💻 For Developers: The NPM Package
 
-The `Dhwani` library provides a simple API for pitch detection.
+You can use the core pitch detection logic of Dhwani in your own music education apps, games, or research tools. The library is "headless" (no UI), zero-dependency, and lightweight.
 
 ### Installation
 
-You can include `dhwani.js` directly in your HTML:
-
-```html
-<script type="module">
-    import { Dhwani } from './dhwani.js'; // Adjust path if needed
-
-    // Your code using the Dhwani library here
-</script>
-```
-
-Or, you can use it within a module bundler (like Webpack, Rollup, or Parcel):
-
 ```bash
-#  This project doesn't have a package.json, so direct npm install isn't applicable
-#  You would typically use:  npm install <package-name>
-#  But for this project, you just include the dhwani.js file directly.
+npm install dhwani
 ```
 
-### API
+### Usage
 
-#### `Dhwani` Class
-
-*   **`constructor(sampleRate: number, threshold?: number)`**
-    *   Creates a new `Dhwani` instance.
-    *   `sampleRate`: The sample rate of the audio context (e.g., `audioContext.sampleRate`).
-    *   `threshold` (optional):  The threshold for pitch detection (between 0 and 1).  Lower values are more sensitive but may be more prone to noise.  Defaults to 0.1.  Adjust this for optimal performance.
-
-*   **`getPitch(buffer: Float32Array): number | null`**
-    *   Analyzes an audio buffer and returns the detected pitch in Hz.
-    *   `buffer`: A `Float32Array` containing the audio data (e.g., from `AnalyserNode.getFloatTimeDomainData()`).
-    *   Returns the frequency in Hz if a pitch is detected, or `null` if no pitch is detected.
-
-### Example (Library Usage)
+The library provides a straightforward API to detect pitch from raw audio buffers and map frequencies to Hindustani notes.
 
 ```javascript
-import { Dhwani } from './dhwani.js'; // Adjust path if necessary
+import { Dhwani } from 'dhwani';
 
-async function startPitchDetection() {
-    try {
-        const audioContext = new AudioContext();
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        const source = audioContext.createMediaStreamSource(stream);
-        const analyser = audioContext.createAnalyser();
-        analyser.fftSize = 2048;
-        source.connect(analyser);
-        const buffer = new Float32Array(analyser.fftSize);
+// 1. Initialize
+const tuner = new Dhwani({
+    sampleRate: 44100, // Audio Context Sample Rate
+    threshold: 0.1     // YIN Algorithm sensitivity (lower is stricter)
+});
 
-        const dhwani = new Dhwani(audioContext.sampleRate, 0.15); // Adjust threshold
+// 2. Detect Pitch (Raw Hz)
+// 'buffer' should be a Float32Array from AnalyserNode.getFloatTimeDomainData()
+const frequency = tuner.getPitch(buffer); 
 
-        function updatePitch() {
-            analyser.getFloatTimeDomainData(buffer);
-            const frequency = dhwani.getPitch(buffer);
+if (frequency) {
+    console.log(`Detected: ${frequency.toFixed(2)} Hz`);
 
-            if (frequency) {
-                console.log("Detected Frequency:", frequency.toFixed(2), "Hz");
-            } else {
-                console.log("No pitch detected");
-            }
-
-            requestAnimationFrame(updatePitch);
-        }
-
-        updatePitch();
-
-    } catch (error) {
-        console.error("Error:", error);
+    // 3. Map to Hindustani Swar
+    const note = tuner.getNote(frequency);
+    
+    if (note) {
+        console.log(`Swar: ${note.swar} (Octave ${note.octave})`);
+        console.log(`Deviation: ${note.cents.toFixed(0)} cents`);
     }
 }
-
-startPitchDetection();
-
 ```
 
-## Technology
+### API Reference
 
-Dhwani is built using:
+#### `new Dhwani(config)`
+*   `config.sampleRate` (number): The sample rate of your audio source (usually 44100 or 48000).
+*   `config.threshold` (number, optional): YIN algorithm threshold (0.05 - 0.2). Defaults to `0.1`.
 
-*   **HTML:**  For the structure of the web page (web app).
-*   **CSS:**  For styling and visual presentation (web app).
-*   **JavaScript:**  For real-time audio processing, pitch detection, and user interface updates (web app and library).
-*   **Web Audio API:**  For accessing the microphone and analyzing audio.
+#### `getPitch(buffer)`
+*   Analyzes a `Float32Array` (time domain data).
+*   Returns: `number` (Frequency in Hz) or `null` (if silence/noise).
 
-## Development
+#### `getNote(frequency)`
+*   Maps a frequency to the closest Just Intonation Swar.
+*   Returns an object:
+    ```javascript
+    {
+      "swar": "Pa",
+      "octave": 0,
+      "cents": -4.2,       // Deviation from the perfect harmonic frequency
+      "frequency": 360     // The ideal frequency of this Swar
+    }
+    ```
 
-The project is completely free and open-source.
+## 🛠️ Development (Monorepo)
 
-Contributions, bug reports, and feature requests are welcome!
+This repository is a monorepo containing both the core logic and the web interface.
+
+### Directory Structure
+*   `packages/core`: The NPM package source code (Math & Logic).
+*   `packages/web`: The Vite-based Web Application (UI).
+
+### Local Setup
+
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/mgks/dhwani.git
+    cd dhwani
+    ```
+
+2.  **Install dependencies (Root):**
+    ```bash
+    npm install
+    ```
+
+3.  **Run the Web App:**
+    This starts the Vite development server and links the local core package automatically.
+    ```bash
+    npm run dev
+    ```
+
+4.  **Build for Production:**
+    ```bash
+    npm run build
+    ```
+
+## 🧮 Tuning System
+
+Dhwani uses a **Just Intonation** scale centered around **Sa = 240Hz** (approx B3, common for male vocals) for relative calculation.
+
+| Swar | Ratio relative to Sa | Ideal Freq (Example) |
+| :--- | :--- | :--- |
+| **Sa** | 1/1 | 240 Hz |
+| **re** (Komal) | 16/15 | 256 Hz |
+| **Re** (Shuddh) | 9/8 | 270 Hz |
+| **ga** (Komal) | 6/5 | 288 Hz |
+| **Ga** (Shuddh) | 5/4 | 300 Hz |
+| **Ma** (Shuddh) | 4/3 | 320 Hz |
+| **Ma#** (Tivra) | 45/32 | 337.5 Hz |
+| **Pa** | 3/2 | 360 Hz |
+| **dha** (Komal) | 8/5 | 384 Hz |
+| **Dha** (Shuddh) | 5/3 | 400 Hz |
+| **ni** (Komal) | 9/5 | 450 Hz |
+| **Ni** (Shuddh) | 15/8 | 480 Hz |
 
 ## License
 
