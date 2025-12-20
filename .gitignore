@@ -1,1 +1,4 @@
 .DS_Store
+genctx.config.json
+genctx.context.md
+node_modules
