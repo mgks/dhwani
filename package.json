@@ -5,8 +5,8 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "npm run dev --workspace=@dhwani/web",
-    "build": "npm run build --workspace=@dhwani/web",
-    "publish-core": "npm publish --workspace=@dhwani/core --access public"
+    "dev": "npm run dev --workspace=dhwani-web",
+    "build": "npm run build --workspace=dhwani-web",
+    "publish-lib": "npm publish --workspace=dhwani --access public"
   }
 }
