@@ -1,0 +1,12 @@
+{
+  "name": "dhwani-monorepo",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=@dhwani/web",
+    "build": "npm run build --workspace=@dhwani/web",
+    "publish-core": "npm publish --workspace=@dhwani/core --access public"
+  }
+}
