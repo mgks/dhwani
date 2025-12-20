@@ -1,5 +1,5 @@
 {
-  "name": "@dhwani/web",
+  "name": "dhwani-web",
   "private": true,
   "type": "module",
   "scripts": {
@@ -8,10 +8,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "dhwani": "*" 
+    "dhwani": "*"
   },
   "devDependencies": {
-    "vite": "^5.0.0",
-    "vite-plugin-pwa": "^0.17.0"
+    "vite": "^7.3.0",
+    "vite-plugin-pwa": "^1.2.0"
   }
 }
