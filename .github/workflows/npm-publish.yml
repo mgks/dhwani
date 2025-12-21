@@ -29,6 +29,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Prepare Package (Copy README & LICENSE)
+        run: |
+          cp README.md packages/core/
+          cp LICENSE packages/core/
+
       - name: Run tests (optional)
         run: npm test --if-present
 
