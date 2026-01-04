@@ -1,21 +1,43 @@
-# Dhwani
+<div align="center">
 
-<p align="left">
-  <a href="https://www.npmjs.com/package/dhwani"><img src="https://img.shields.io/npm/v/dhwani.svg?style=flat-square&color=007acc" alt="npm version"></a>
-  <a href="https://www.npmjs.com/package/dhwani"><img src="https://img.shields.io/npm/dt/dhwani.svg?style=flat-square&color=success" alt="npm downloads"></a>
-  <a href="https://github.com/mgks/dhwani/blob/main/LICENSE"><img src="https://img.shields.io/github/license/mgks/dhwani.svg?style=flat-square&color=blue" alt="license"></a>
-  <a href="https://github.com/mgks/dhwani/stargazers"><img src="https://img.shields.io/github/stars/mgks/dhwani?style=flat-square&logo=github" alt="stars"></a>
-</p>
+  <!-- PROJECT TITLE -->
+  <h1>Dhwani</h1>
+  
+  <!-- ONE LINE SUMMARY -->
+  <p>
+    <b>A precision vocal tuner engine designed specifically for Hindustani Classical Music.</b>
+  </p>
+  
+  <!-- BADGES -->
+  <p>
+    <!--<img src="https://img.shields.io/github/v/release/mgks/dhwani?style=flat-square&color=38bd24" alt="release version">-->
+    <img src="https://img.shields.io/npm/v/dhwani.svg?style=flat-square&color=fc3b53" alt="npm version">
+    <img src="https://img.shields.io/npm/dt/dhwani.svg?style=flat-square&color=38bd24" alt="npm downloads">
+    <img src="https://img.shields.io/github/stars/mgks/dhwani?style=flat-square&logo=github&color=blue" alt="stars">
+    <img src="https://img.shields.io/github/license/mgks/dhwani.svg?style=flat-square&color=blue" alt="license">
+  </p>
 
-**Dhwani** is a precision vocal tuner engine designed specifically for **Hindustani Classical Music**. Unlike standard tuners that use Equal Temperament (12-TET), Dhwani uses **Just Intonation** relative to a base Sa, making it accurate for Indian Classical frequencies.
+  <!-- MENU -->
+  <p>
+    <h4>
+      <a href="https://dhwani.mgks.dev">🚀 Open Web App</a>
+    </h4>
+  </p>
+
+  <!-- PREVIEW -->
+  <p>
+    <img width="850" alt="image" src="https://github.com/user-attachments/assets/24d74631-4bba-4d64-8eb3-62cfebb86691" />
+  </p>
+
+</div>
+
+Dhwani uses **Just Intonation** relative to a base Sa, making it accurate for Indian Classical frequencies, unlike standard tuners that use Equal Temperament (12-TET).
 
 It functions as both a standalone **Web Application** and a lightweight, dependency-free **Node.js Library**.
 
-## 🎵 For Musicians: The Web App
+## For Musicians
 
 Dhwani is available as a free, responsive web application. It features a noise-resistant detection algorithm, a "visual tape" interface, and dark mode support.
-
-👉 **Launch Tuner: [dhwani.mgks.dev](https://dhwani.mgks.dev)**
 
 ### Features
 *   **Real-time Swar Detection:** Identifies the closest Hindustani note (Sa, re, Re, ga, Ga...).
@@ -23,7 +45,7 @@ Dhwani is available as a free, responsive web application. It features a noise-r
 *   **Visual Feedback:** A sliding dial shows exactly how many "cents" (microtones) you are sharp or flat.
 *   **Offline Capable:** Install it as a PWA (Progressive Web App) on your phone or desktop to use without internet.
 
-## 👨‍💻 For Developers: The NPM Package
+## For Developers: The NPM Package
 
 You can use the core pitch detection logic of Dhwani in your own music education apps, games, or research tools. The library is "headless" (no UI), zero-dependency, and lightweight.
 
@@ -85,7 +107,7 @@ if (frequency) {
     }
     ```
 
-## 🛠️ Development (Monorepo)
+## Development
 
 This repository is a monorepo containing both the core logic and the web interface.
 
@@ -117,7 +139,7 @@ This repository is a monorepo containing both the core logic and the web interfa
     npm run build
     ```
 
-## 🧮 Tuning System
+## Tuning System
 
 Dhwani uses a **Just Intonation** scale centered around **Sa = 240Hz** (approx B3, common for male vocals) for relative calculation.
 
