@@ -7,6 +7,11 @@
   "scripts": {
     "dev": "npm run dev --workspace=dhwani-web",
     "build": "npm run build --workspace=dhwani-web",
-    "publish-lib": "npm publish --workspace=dhwani --access public"
-  }
+    "publish-lib": "npm publish --workspace=dhwani --access public",
+    "bump": "node scripts/bump.mjs"
+  },
+  "overrides": {
+    "serialize-javascript": "7.0.5"
+  },
+  "version": "0.1.2"
 }
