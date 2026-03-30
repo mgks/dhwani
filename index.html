@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="A comprehensive musical toolkit for classical and modern musicians. Tuners, metronomes, drones, and more.">
+<meta name="keywords" content="Hindustani music, vocal tuner, swar, pitch detection, raga, online tuner, music practice, Indian classical music, shruti, intonation, just intonation, web audio, metronome, chromatic tuner">
+<meta name="author" content="Ghazi Khan (@mgks)">
+
+<title>Dhwani : Musical Toolkit</title>
+
+<!-- Favicons -->
+<link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://dhwani.mgks.dev">
+<meta property="og:title" content="Dhwani : Musical Toolkit">
+<meta property="og:description" content="A comprehensive musical toolkit for classical and modern musicians. Tuners, metronomes, drones, and more.">
+<meta property="og:image" content="https://dhwani.mgks.dev/images/preview.png">
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://dhwani.mgks.dev">
+<meta property="twitter:title" content="Dhwani : Musical Toolkit">
+<meta property="twitter:description" content="A comprehensive musical toolkit for classical and modern musicians. Tuners, metronomes, drones, and more.">
+<meta property="twitter:image" content="https://dhwani.mgks.dev/images/preview.png">
+
+<link rel="canonical" href="https://dhwani.mgks.dev" />
+
+<script>
+    // Prevent theme flash
+    (function() {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    })();
+</script>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-93TKP8Z70J"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-93TKP8Z70J');
+</script>
+  <script type="module" crossorigin src="/assets/common-CvhASBnJ.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/common-DLvkMUuw.css">
+<link rel="manifest" href="/manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="/registerSW.js"></script></head>
+<body>
+    <div class="header-container home-header">
+    
+        <header>
+            <h1>Dhwani</h1>
+            <p>Your Musical Toolkit</p>
+        </header>
+    
+
+    <button id="themeToggle" aria-label="Toggle Dark Mode" class="theme-btn-header">
+        <!-- Sun Icon (Visible in Dark Mode) -->
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
+        </svg>
+        <!-- Moon Icon (Visible in Light Mode) -->
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+    </button>
+</div>
+
+    <main class="menu-grid">
+        <a href="/swar-tuner/" class="menu-item glass" id="swar-tuner-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                <path d="M9 18V5l12-2v13"></path>
+                <circle cx="6" cy="18" r="3"></circle>
+                <circle cx="18" cy="16" r="3"></circle>
+            </svg>
+            <span>Swar Tuner</span>
+        </a>
+
+        <a href="/instrument-tuner/" class="menu-item glass" id="instrument-tuner-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                <path d="M18 10L8 20l-4-4L14 6l4 4z"></path>
+                <path d="M17 7l3-3"></path>
+                <path d="M5 19l-3 3"></path>
+            </svg>
+            <span>Instrument Tuner</span>
+        </a>
+
+        <a href="/metronome/" class="menu-item glass" id="metronome-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            <span>Metronome</span>
+        </a>
+
+        <a href="/tanpura/" class="menu-item glass" id="tanpura-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                <path d="M12 2v20"></path>
+                <path d="M5 22h14"></path>
+                <path d="M12 2C8 2 5 5 5 10v4c0 1.5 1 3 3 4l4 2 4-2c2-1 3-2.5 3-4v-4c0-5-3-8-7-8z"></path>
+            </svg>
+            <span>Tanpura Drone</span>
+        </a>
+
+        <a href="/instructions/" class="menu-item glass" id="instructions-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+            <span>How to use</span>
+        </a>
+    </main>
+
+    <footer class="footer">
+    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="1.0166668891906738 2.9749999046325684 21.966665267944336 20.024999618530273">
+        <path d="M7 3c-1.535 0-3.078.5-4.25 1.7-2.343 2.4-2.279 6.1 0 8.5L12 23l9.25-9.8c2.279-2.4 2.343-6.1 0-8.5-2.343-2.3-6.157-2.3-8.5 0l-.75.8-.75-.8C10.078 3.5 8.536 3 7 3" fill="#e74c3c"></path>
+    </svg> 
+    <b>{ <a href="https://mgks.dev">@mgks</a> / <a href="https://github.com/mgks/dhwani">github</a> }</b>
+</footer>
+</body>
+</html>
