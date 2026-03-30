@@ -29,15 +29,29 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Prepare Package (Copy README & LICENSE)
+      - name: Prepare Packages (Copy README & LICENSE)
         run: |
-          cp README.md packages/core/
-          cp LICENSE packages/core/
+          for pkg in packages/dhwani packages/chromatic-tuner packages/dhwani-metronome; do
+            if [ -d "$pkg" ]; then
+              cp README.md "$pkg/" || true
+              cp LICENSE "$pkg/" || true
+            fi
+          done
 
       - name: Run tests (optional)
         run: npm test --if-present
 
-      - name: Publish to npm
+      - name: Publish Dhwani to npm
         run: npm publish --workspace=dhwani --access public
-        # env:
-        #   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish Chromatic Tuner to npm
+        run: npm publish --workspace=chromatic-tuner --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish Metronome to npm
+        run: npm publish --workspace=dhwani-metronome --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
