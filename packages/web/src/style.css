@@ -427,7 +427,7 @@ margin: 2em 0 0;
 .footer { padding: 5px; font-size: 0.7rem; opacity: 0.3; text-align: center; width: 100%; }
 
 .home-theme-toggle {
-    margin: 10px auto 20px;
+    margin: 10px auto 15%;
     width: 44px;
     height: 44px;
     display: flex;
