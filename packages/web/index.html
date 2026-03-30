@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <%- include('./partials/head', { 
-        title: 'Dhwani : Musical Toolkit', 
+        title: 'Dhwani : Your Musical Toolkit', 
         description: 'A comprehensive musical toolkit for classical and modern musicians. Tuners, metronomes, drones, and more.',
         canonical: 'https://dhwani.mgks.dev'
     }) %>
@@ -55,6 +55,16 @@
             <span>How to use</span>
         </a>
     </main>
+    
+    <button aria-label="Toggle Dark Mode" class="home-theme-toggle theme-toggle glass">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
+        </svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+    </button>
 
     <%- include('./partials/footer') %>
     <script type="module" src="/src/common.js"></script>

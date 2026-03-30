@@ -9,18 +9,16 @@
 </head>
 <body>
     <%- include('partials/header', { isHome: false, toolName: 'Tanpura' }) %>
-
-
     <main class="tanpura-container">
-        <div class="drone-visualizer">
-            <div class="string s1"></div>
-            <div class="string s2"></div>
-            <div class="string s3"></div>
-            <div class="string s4"></div>
+        <div class="drone-visualizer-strings">
+            <div class="drone-string s1"></div>
+            <div class="drone-string s2"></div>
+            <div class="drone-string s3"></div>
+            <div class="drone-string s4"></div>
         </div>
-        
-        <div id="frequency-display" class="frequency-display">
-            <span id="hz-value">240</span> <span class="label">Hz (Sa)</span>
+
+        <div id="frequency-display" class="frequency-display glass">
+            <span id="hz-value">240</span> <span class="label">Hz</span>
         </div>
 
         <div class="tanpura-controls glass">

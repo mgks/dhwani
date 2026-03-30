@@ -73,9 +73,23 @@ bpmMinus.addEventListener('touchstart', (e) => { e.preventDefault(); startSteppi
 bpmPlus.addEventListener('touchstart', (e) => { e.preventDefault(); startStepping(true); });
 window.addEventListener('touchend', stopStepping);
 
-startBtn.addEventListener('click', () => {
+async function unlockAudioContext(context) {
+    if (context.state === 'suspended') {
+        await context.resume();
+    }
+    // Play silent buffer to unlock audio on iOS
+    const buffer = context.createBuffer(1, 1, 22050);
+    const source = context.createBufferSource();
+    source.buffer = buffer;
+    source.connect(context.destination);
+    source.start(0);
+}
+
+startBtn.addEventListener('click', async () => {
     if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
     
+    await unlockAudioContext(audioContext);
+
     if (!metronomeInstance) {
         metronomeInstance = new Metronome(playClick);
         metronomeInstance.bpm = parseInt(bpmSlider.value);

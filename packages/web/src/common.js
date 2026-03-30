@@ -3,7 +3,7 @@
  */
 
 export function initTheme() {
-    const toggleBtn = document.getElementById('themeToggle');
+    const toggleBtns = document.querySelectorAll('.theme-toggle');
     const html = document.documentElement;
     
     const savedTheme = localStorage.getItem('dhwani-theme');
@@ -13,14 +13,14 @@ export function initTheme() {
         html.setAttribute('data-theme', 'dark');
     }
 
-    if (toggleBtn) {
-        toggleBtn.addEventListener('click', () => {
+    toggleBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
             const currentTheme = html.getAttribute('data-theme');
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
             html.setAttribute('data-theme', newTheme);
             localStorage.setItem('dhwani-theme', newTheme);
         });
-    }
+    });
 }
 
 // Global Initialization

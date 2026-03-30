@@ -7,7 +7,7 @@ let currentMode = 'Pa';
 
 const playBtn = document.getElementById('play-btn');
 const hzDisplay = document.getElementById('hz-value');
-const strings = document.querySelectorAll('.string');
+const strings = document.querySelectorAll('.drone-string');
 const presetBtns = document.querySelectorAll('.preset-btn');
 const modeBtns = document.querySelectorAll('.mode-btn');
 
@@ -26,9 +26,21 @@ function stopStrings() {
     strings.forEach(s => s.classList.remove('vibrating'));
 }
 
-function startStrings(hz, mode) {
+async function unlockAudioContext(context) {
+    if (context.state === 'suspended') {
+        await context.resume();
+    }
+    // Play silent buffer to unlock audio on iOS
+    const buffer = context.createBuffer(1, 1, 22050);
+    const source = context.createBufferSource();
+    source.buffer = buffer;
+    source.connect(context.destination);
+    source.start(0);
+}
+
+async function startStrings(hz, mode) {
     if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    if (audioContext.state === 'suspended') audioContext.resume();
+    await unlockAudioContext(audioContext);
 
     const ratios = tuningRatios[mode] || tuningRatios['Pa'];
     
@@ -73,19 +85,19 @@ function startStrings(hz, mode) {
     });
 }
 
-playBtn.addEventListener('click', () => {
+playBtn.addEventListener('click', async () => {
     if (isPlaying) {
         stopStrings();
         playBtn.innerText = "Play Drone";
     } else {
-        startStrings(currentHz, currentMode);
+        await startStrings(currentHz, currentMode);
         playBtn.innerText = "Stop Drone";
     }
     isPlaying = !isPlaying;
 });
 
 presetBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', async () => {
         presetBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         currentHz = parseFloat(btn.dataset.hz);
@@ -93,20 +105,20 @@ presetBtns.forEach(btn => {
         
         if (isPlaying) {
             stopStrings();
-            startStrings(currentHz, currentMode);
+            await startStrings(currentHz, currentMode);
         }
     });
 });
 
 modeBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', async () => {
         modeBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         currentMode = btn.dataset.mode;
         
         if (isPlaying) {
             stopStrings();
-            startStrings(currentHz, currentMode);
+            await startStrings(currentHz, currentMode);
         }
     });
 });
