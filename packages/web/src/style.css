@@ -1,258 +1,400 @@
-/* =========================================
-   1. VARIABLES & THEME CONFIGURATION
-   ========================================= */
-
 :root {
-    --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    --light-bg: #ffffff;
-    --light-text: #1a1a1a;
-    --light-dial-bg: #f5f5f7;
-    --light-dial-border: #ffffff;
-    --light-note-inactive: #949494;
-    --dark-bg: #000000;
-    --dark-text: #f5f5f7;
-    --dark-dial-bg: #1c1c1e;
-    --dark-dial-border: #000000;
-    --dark-note-inactive: #5c5c5c;
-    --center-line: #ff3b30;
-    --note-active: #007aff;
-    --note-perfect: #34c759;
-    --bg-color: var(--light-bg);
-    --text-primary: var(--light-text);
-    --dial-bg: var(--light-dial-bg);
-    --dial-border: var(--light-dial-border);
-    --note-inactive: var(--light-note-inactive);
-
+    --bg-color: #f0f0f3;
+    --text-color: #1d1d1f;
+    --accent-color: #e63946;
+    --glass-bg: rgba(255, 255, 255, 0.45);
+    --glass-border: rgba(255, 255, 255, 0.5);
+    --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.08);
 }
 
-/* =========================================
-   2. THEME OVERRIDES (The Cascade Logic)
-   ========================================= */
-
-/* A. System Dark Mode (Only if user hasn't manually switched to light) */
-@media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-        --bg-color: var(--dark-bg);
-        --text-primary: var(--dark-text);
-        --dial-bg: var(--dark-dial-bg);
-        --dial-border: var(--dark-dial-border);
-        --note-inactive: var(--dark-note-inactive);
-    }
-}
-
-/* B. Manual Dark Mode (Forced by JS) */
 [data-theme="dark"] {
-    --bg-color: var(--dark-bg);
-    --text-primary: var(--dark-text);
-    --dial-bg: var(--dark-dial-bg);
-    --dial-border: var(--dark-dial-border);
-    --note-inactive: var(--dark-note-inactive);
+    --bg-color: #0c0c0e;
+    --text-color: #f5f5f7;
+    --glass-bg: rgba(28, 28, 30, 0.6);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 }
-
-/* C. Manual Light Mode (Forced by JS) */
-[data-theme="light"] {
-    --bg-color: var(--light-bg);
-    --text-primary: var(--light-text);
-    --dial-bg: var(--light-dial-bg);
-    --dial-border: var(--light-dial-border);
-    --note-inactive: var(--light-note-inactive);
-}
-
-/* =========================================
-   3. ICON VISIBILITY LOGIC
-   ========================================= */
-
-/* Default State (Light Mode): Show Moon, Hide Sun */
-.icon-sun { display: none; }
-.icon-moon { display: block; }
-
-/* Dark State (System default NOT overridden) */
-@media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) .icon-sun { display: block; }
-    :root:not([data-theme="light"]) .icon-moon { display: none; }
-}
-
-/* Dark State (Forced) */
-[data-theme="dark"] .icon-sun { display: block; }
-[data-theme="dark"] .icon-moon { display: none; }
-
-/* Light State (Forced) */
-[data-theme="light"] .icon-sun { display: none; }
-[data-theme="light"] .icon-moon { display: block; }
-
-
-/* =========================================
-   4. GLOBAL LAYOUT
-   ========================================= */
 
 * {
     box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+    -webkit-tap-highlight-color: transparent;
 }
 
 body {
-    background-color: var(--bg-color);
-    color: var(--text-primary);
-    font-family: var(--font-stack); /* This fixes your font issue */
-    height: 100vh;
+    font-family: 'Inter', -apple-system, system-ui, sans-serif;
+    background: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
     display: flex;
     flex-direction: column;
+    min-height: 100vh;
     align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: background 0.3s, color 0.3s;
+    overflow-x: hidden;
+    padding-bottom: 30px;
 }
 
-/* =========================================
-   5. COMPONENT: THEME TOGGLE BUTTON
-   ========================================= */
-
-#themeToggle {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background: transparent;
-    border: none;
-    color: var(--text-primary);
-    cursor: pointer;
-    padding: 8px;
-    border-radius: 50%;
-    transition: background 0.2s;
-    opacity: 0.7;
+/* --- HEADER --- */
+.header-container {
+    width: 100%;
+    max-width: 800px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.3s;
     z-index: 100;
 }
 
-#themeToggle:hover {
-    background: rgba(128, 128, 128, 0.2);
-    opacity: 1;
+.home-header {
+    flex-direction: column;
+    text-align: center;
+    margin-top: 30px;
+    gap: 15px;
 }
 
-#themeToggle svg {
-    width: 24px;
-    height: 24px;
-    /* Remove display:block here to let the classes above handle visibility */
+.home-header header h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin: 0;
+    letter-spacing: -3px;
+    line-height: 1;
+    color: var(--accent-color);
 }
 
-/* =========================================
-   6. COMPONENT: SWAR DIAL
-   ========================================= */
-
-#swarDial {
-    position: relative;
-    width: 100%;
-    max-width: 800px;
-    height: 160px;
-    background: var(--dial-bg);
-    border-top: 1px solid var(--dial-border);
-    border-bottom: 1px solid var(--dial-border);
-    overflow: hidden;
-    mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent);
-    -webkit-mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent);
+.home-header header p {
+    font-size: 1rem;
+    opacity: 0.6;
+    margin: 5px 0 0 0;
 }
 
-#swarDial::after {
-    content: '';
-    position: absolute;
+.tool-header {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--glass-border);
+    max-width: 100%;
+    padding: 12px 20px;
     top: 0;
-    bottom: 0;
-    left: 50%;
-    width: 2px;
-    background-color: var(--center-line);
-    transform: translateX(-50%);
-    z-index: 10;
-    box-shadow: 0 0 10px var(--center-line);
+    position: sticky;
 }
 
-#swarContainer {
+.tool-nav-wrapper { display: flex; align-items: baseline; gap: 15px; }
+.brand-link { font-size: 1.4rem; font-weight: 800; text-decoration: none; color: var(--accent-color); letter-spacing: -1px; }
+.tool-name-label { font-weight: 600; font-size: 0.9rem; opacity: 0.5; text-transform: uppercase; letter-spacing: 1px; padding-left: 15px; border-left: 1px solid var(--glass-border); }
+
+.theme-btn-header {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    color: var(--text-color);
     display: flex;
-    height: 100%;
     align-items: center;
-    will-change: transform;
-    transform: translate3d(0, 0, 0); 
-    opacity: 0.3; 
-    transition: opacity 0.5s ease;
+    justify-content: center;
 }
 
-.swarItem {
-    flex: 0 0 60px; 
+[data-theme="dark"] .icon-sun { display: block; }
+[data-theme="dark"] .icon-moon { display: none; }
+.icon-sun { display: none; }
+.icon-moon { display: block; }
+.theme-btn-header svg { width: 20px; height: 20px; }
+
+/* --- GLASS --- */
+.glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+}
+
+/* --- HOME GRID --- */
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 20px;
+    max-width: 500px;
+    width: 100%;
+}
+
+.menu-item {
+    text-decoration: none;
+    color: inherit;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100%;
-    color: var(--note-inactive);
-    transition: color 0.2s, transform 0.2s;
-    user-select: none;
+    aspect-ratio: 1 / 1;
+    padding: 20px;
+    transition: transform 0.2s, background 0.3s;
 }
 
-.swarName {
-    font-size: 1.5rem;
-    font-weight: 600;
+.menu-item:hover { transform: translateY(-5px); background: var(--glass-bg); }
+.menu-item .icon { width: 42px; height: 42px; margin-bottom: 15px; stroke: var(--accent-color); }
+.menu-item span { font-weight: 600; font-size: 0.95rem; text-align: center; }
+
+.menu-item:last-child {
+    grid-column: span 2;
+    aspect-ratio: auto;
+    min-height: 80px;
+    padding: 15px 30px;
+    flex-direction: row;
+    gap: 20px;
+    justify-content: center;
+}
+.menu-item:last-child .icon { margin-bottom: 0; width: 32px; height: 32px; }
+
+/* --- CONTAINERS --- */
+.tuner-container, .metronome-container, .tanpura-container, .instructions-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+    flex: 1;
 }
 
-.swarIndicator {
-    width: 4px;
-    height: 20px;
-    background-color: currentColor;
-    margin-top: 10px;
-    border-radius: 2px;
-}
-
-/* Active States */
-.swarItem.active {
-    color: var(--note-active);
-    transform: scale(1.1);
-    opacity: 1;
-}
-
-.swarItem.perfect {
-    color: var(--note-perfect);
-    text-shadow: 0 0 15px var(--note-perfect);
-    transform: scale(1.25);
-}
-
-.swarItem.perfect .swarIndicator {
-    box-shadow: 0 0 10px var(--note-perfect);
-}
-
-/* =========================================
-   7. FOOTER & DETAILS
-   ========================================= */
-
-#detailedSwarDisplay {
-    margin-top: 2rem;
+/* --- BUTTONS --- */
+.action-btn {
+    margin-top: 30px;
+    padding: 16px 48px;
+    font-weight: 700;
     font-size: 1.1rem;
-    font-weight: 500;
-    color: var(--text-secondary); /* This wasn't defined in your snippet, falling back to text-primary is safer if missing */
-    font-variant-numeric: tabular-nums;
-    letter-spacing: 0.5px;
-    min-height: 1.5em;
+    cursor: pointer;
+    border: 1px solid var(--glass-border);
+    color: var(--text-color);
+    background: var(--glass-bg);
+    backdrop-filter: blur(5px);
+    transition: all 0.2s;
+    border-radius: 50px;
+    width: auto;
+    width: fit-content;
+    min-width: 180px;
     text-align: center;
 }
+.action-btn:hover { background: var(--accent-color); color: white; border-color: var(--accent-color); }
+.action-btn:active { transform: scale(0.95); }
 
-.footer {
-    position: fixed;
-    bottom: 20px;
+/* --- METRONOME --- */
+.metronome-controls {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 30px;
+    margin-top: 25px;
+    width: 100%;
+    max-width: 450px;
+}
+
+.btn-round {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    color: var(--text-color);
+    font-size: 1.8rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 0;
+    padding-bottom: 4px; /* Manual adjustment for glyph baseline */
+    transition: all 0.2s;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+.btn-round:hover { background: var(--accent-color); color: white; }
+
+#bpm-slider {
+    flex: 1;
+    appearance: none;
+    -webkit-appearance: none;
+    background: transparent;
+    cursor: pointer;
+}
+#bpm-slider::-webkit-slider-runnable-track { width: 100%; height: 6px; background: var(--glass-border); border-radius: 3px; }
+#bpm-slider::-webkit-slider-thumb { -webkit-appearance: none; height: 22px; width: 22px; border-radius: 50%; background: var(--accent-color); margin-top: -8px; box-shadow: 0 0 12px rgba(255,77,77,0.3); }
+
+/* --- TANPURA --- */
+.tanpura-controls {
+    margin-top: 35px;
+    padding: 25px;
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.label-heading {
     font-size: 0.8rem;
-    color: var(--text-primary);
-    text-align: center;
-    opacity: 0.75;
-
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.6;
+    margin-bottom: -5px;
 }
 
-.footer svg {
-    margin: 5px 2px;
-
+.preset-group, .mode-group {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
-.footer a {
-    color: inherit;
-    text-decoration: none;
-
+.preset-btn, .mode-btn {
+    padding: 8px 16px;
+    min-width: 50px;
+    border-radius: 10px;
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    color: var(--text-color);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.8rem;
 }
 
-@media (max-width: 600px) {
-    #swarDial { height: 120px; }
-    .swarName { font-size: 1.2rem; }
+.preset-btn:hover, .mode-btn:hover { border-color: var(--accent-color); color: var(--accent-color); }
+.preset-btn.active, .mode-btn.active { background: var(--accent-color); color: white; border-color: var(--accent-color); box-shadow: 0 0 15px rgba(255,77,77,0.4); }
+
+.preset-btn {
+    padding: 12px 24px;
+    min-width: 70px;
+    border-radius: 15px;
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    color: var(--text-color);
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
 }
+.preset-btn:hover { border-color: var(--accent-color); color: var(--accent-color); }
+.preset-btn.active { background: var(--accent-color); color: white; border-color: var(--accent-color); box-shadow: 0 0 15px rgba(255,77,77,0.4); }
+
+/* --- TUNER --- */
+/* --- TUNER & VISUALIZERS --- */
+.meter-wrapper, .visualizer-wrapper { 
+    position: relative; 
+    width: 300px; 
+    height: 300px; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    margin-bottom: 20px;
+}
+
+/* --- INDIVIDUAL TOOL LAYOUTS --- */
+.central-circle { 
+    position: absolute; 
+    bottom: 0px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 140px; 
+    height: 140px; 
+    border-radius: 50%; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    z-index: 10;
+    pointer-events: none;
+}
+
+.note-display { 
+    margin-top: -40px;
+    padding: 10px 30px;
+    border-radius: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.frequency-display { 
+    padding: 15px 40px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.frequency-display span{
+    margin: 0 2px;
+}
+
+#current-swar, #current-note { font-size: 3.2rem; font-weight: 800; color: var(--accent-color); line-height: 1; }
+.current-note { font-size: 3.2rem; font-weight: 800; color: var(--accent-color); }
+.hint {
+font-size: .8em;
+margin: 2em 0 0;
+}
+
+#detailed-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    gap: 2px;
+}
+#frequency-display { font-weight: 700; font-size: 1rem; }
+#cents-display { opacity: 0.5; font-size: 0.8rem; }
+
+.arc-meter { 
+    width: 300px; 
+    height: 150px; 
+    background: var(--glass-border); 
+    border-radius: 150px 150px 0 0; 
+    position: relative; 
+    border: 1px solid var(--glass-border); 
+    overflow: hidden; 
+    z-index: 1;
+}
+
+.needle { 
+    position: absolute; 
+    bottom: 0; 
+    left: 50%; 
+    width: 2px; 
+    height: 130px; 
+    background: var(--accent-color); 
+    transform-origin: bottom center; 
+    transition: transform 0.1s ease-out; 
+    z-index: 2;
+}
+
+.beat-visualizer { width: 100px; height: 100px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+.dot { width: 30px; height: 30px; background: var(--accent-color); border-radius: 50%; }
+.dot.flash { transform: scale(1.75); background: #fff; box-shadow: 0 0 50px #fff; }
+
+.drone-visualizer { 
+    width: 220px; 
+    height: 120px; 
+    display: flex; 
+    justify-content: space-around; 
+    margin-bottom: 20px; 
+    z-index: 1;
+}
+.string { width: 2px; background: var(--glass-border); border-radius: 2px; }
+.string.vibrating { animation: vibrate 0.1s infinite alternate; background: var(--accent-color); box-shadow: 0 0 10px var(--accent-color); }
+@keyframes vibrate { from { transform: scaleX(1); } to { transform: scaleX(3); opacity: 0.5; } }
+
+/* --- RESPONSIVE --- */
+@media (max-width: 500px) {
+    .menu-grid { gap: 12px; }
+    .home-header header h1 { font-size: 3rem; }
+    .action-btn { min-width: 160px; padding: 14px 40px; }
+    .metronome-controls { padding: 15px; }
+}
+
+.footer { padding: 20px; font-size: 0.85rem; opacity: 0.6; text-align: center; width: 100%; }
+.footer a { color: inherit; text-decoration: none; font-weight: 600; }

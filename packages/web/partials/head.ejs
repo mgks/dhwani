@@ -1,0 +1,45 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="<%- (typeof description !== 'undefined') ? description : 'Dhwani - Advanced musical toolkit for Indian classical and universal music practice.' %>">
+<meta name="keywords" content="<%- (typeof keywords !== 'undefined') ? keywords : 'Hindustani music, vocal tuner, swar, pitch detection, raga, online tuner, music practice, Indian classical music, shruti, intonation, just intonation, web audio, metronome, chromatic tuner' %>">
+<meta name="author" content="Ghazi Khan (@mgks)">
+
+<title><%- (typeof title !== 'undefined') ? title : 'Dhwani : Musical Toolkit' %></title>
+
+<!-- Favicons -->
+<link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="<%- (typeof canonical !== 'undefined') ? canonical : 'https://dhwani.mgks.dev' %>">
+<meta property="og:title" content="<%- (typeof title !== 'undefined') ? title : 'Dhwani : Musical Toolkit' %>">
+<meta property="og:description" content="<%- (typeof description !== 'undefined') ? description : 'Advanced musical toolkit for Indian classical and universal music practice.' %>">
+<meta property="og:image" content="https://dhwani.mgks.dev/images/preview.png">
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="<%- (typeof canonical !== 'undefined') ? canonical : 'https://dhwani.mgks.dev' %>">
+<meta property="twitter:title" content="<%- (typeof title !== 'undefined') ? title : 'Dhwani : Musical Toolkit' %>">
+<meta property="twitter:description" content="<%- (typeof description !== 'undefined') ? description : 'Advanced musical toolkit for Indian classical and universal music practice.' %>">
+<meta property="twitter:image" content="https://dhwani.mgks.dev/images/preview.png">
+
+<link rel="canonical" href="<%- (typeof canonical !== 'undefined') ? canonical : 'https://dhwani.mgks.dev' %>" />
+
+<link rel="stylesheet" href="/src/style.css">
+<script>
+    // Prevent theme flash
+    (function() {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    })();
+</script>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-93TKP8Z70J"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-93TKP8Z70J');
+</script>

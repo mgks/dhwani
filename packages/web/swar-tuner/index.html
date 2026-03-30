@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('partials/head', { 
+        title: 'Hindustani Swar Tuner : Dhwani', 
+        description: 'A real-time Hindustani classical music vocal tuner. Practice swars, improve intonation, and get visual feedback.',
+        canonical: 'https://dhwani.mgks.dev/swar-tuner/'
+    }) %>
+</head>
+<body>
+    <%- include('partials/header', { isHome: false, toolName: 'Swar Tuner' }) %>
+
+    <main class="tuner-container">
+        <div class="meter-wrapper">
+            <svg class="meter-svg" viewBox="0 0 200 120">
+                <path d="M20,100 A80,80 0 0,1 180,100" fill="none" stroke="var(--glass-border)" stroke-width="10" stroke-linecap="round"/>
+                <path id="meter-arc" d="M20,100 A80,80 0 0,1 180,100" fill="none" stroke="var(--accent-color)" stroke-width="10" stroke-linecap="round" stroke-dasharray="251" stroke-dashoffset="251"/>
+                <line id="needle" x1="100" y1="100" x2="100" y2="30" stroke="var(--text-color)" stroke-width="3" stroke-linecap="round" style="transform-origin: 100px 100px; transform: rotate(0deg); transition: transform 0.1s ease-out;"/>
+            </svg>
+            <div class="central-circle glass">
+                <span id="current-swar">--</span>
+                <span id="current-octave"></span>
+            </div>
+        </div>
+
+        <div id="detailed-info">
+            <span id="frequency-display">0.0 Hz</span>
+            <span id="cents-display">0 cents</span>
+        </div>
+
+        <p class="hint">Humming is recommended for better stability.</p>
+        
+        <button id="start-btn" class="glass action-btn">Start Listening</button>
+    </main>
+
+    <%- include('partials/footer') %>
+    <script type="module" src="/src/common.js"></script>
+    <script type="module" src="script.js"></script>
+</body>
+</html>
