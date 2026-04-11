@@ -13,7 +13,7 @@
     "dhwani-metronome": "*"
   },
   "devDependencies": {
-    "vite": "^7.2.1",
+    "vite": "^7.3.2",
     "vite-plugin-ejs": "^1.7.0",
     "vite-plugin-pwa": "^1.2.0"
   },
